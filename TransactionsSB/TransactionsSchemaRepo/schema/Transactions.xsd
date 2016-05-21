@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.syntouch.nl/oracle/soa12c/transactions"
+            targetNamespace="http://www.syntouch.nl/oracle/soa12c/transactions" elementFormDefault="qualified">
+    <xsd:element name="action">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="actionType">
+                    <xsd:attribute name="xa" type="xsd:boolean"/>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:simpleType name="actionType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="commit"/>
+            <xsd:enumeration value="retry"/>
+            <xsd:enumeration value="rollback"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

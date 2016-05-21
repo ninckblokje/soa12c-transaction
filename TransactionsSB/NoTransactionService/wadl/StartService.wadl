@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="StartService">RestService</doc>
+   <resources>
+      <resource path="/start/{action}">
+         <method name="POST" soa:name="start">
+            <request>
+               <param name="action" style="template" type="xsd:string"/>
+               <param name="xa" style="query" type="xsd:string"/>
+            </request>
+            <response status="204"/>
+            <response status="500"/>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ser:proxyServiceEntry xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:oper="http://xmlns.oracle.com/servicebus/proxy/operations" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env">
+    <ser:coreEntry>
+        <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+            <con:request type="XML">
+                <con1:schema ref="TransactionsSchemaRepo/schema/Transactions" element="action" xmlns:con1="http://www.bea.com/wli/sb/typesystem/config"/>
+            </con:request>
+        </ser:binding>
+        <oper:operations enabled="true"/>
+        <ser:invoke ref="NoTransactionService/pipeline/JMS" xsi:type="con1:PipelineRef" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config"/>
+        <ser:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </ser:xqConfiguration>
+    </ser:coreEntry>
+    <ser:endpointConfig>
+        <tran:provider-id>jms</tran:provider-id>
+        <tran:inbound>true</tran:inbound>
+        <tran:URI>
+            <env:value>jms://localhost:7001/jms.TransactionXAFactory/jms.TransactionQueue</env:value>
+        </tran:URI>
+        <tran:inbound-properties/>
+        <tran:provider-specific xsi:type="jms:JmsEndPointConfiguration" xmlns:jms="http://www.bea.com/wli/sb/transports/jms">
+            <jms:is-queue>true</jms:is-queue>
+            <jms:is-secure>false</jms:is-secure>
+            <jms:inbound-properties>
+                <jms:message-selector>xa='false'</jms:message-selector>
+                <jms:response-required>false</jms:response-required>
+                <jms:XA-required>false</jms:XA-required>
+                <jms:transaction-timeout>600</jms:transaction-timeout>
+            </jms:inbound-properties>
+            <jms:request-encoding>UTF-8</jms:request-encoding>
+            <jms:jndi-timeout>0</jms:jndi-timeout>
+        </tran:provider-specific>
+    </ser:endpointConfig>
+</ser:proxyServiceEntry>

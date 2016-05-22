@@ -1,0 +1,44 @@
+<wsdl:definitions
+     name="TransactionDbAdapter"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="TransactionDbAdapter_plt" >
+    <plt:role name="TransactionDbAdapter_role" >
+      <plt:portType name="tns:TransactionDbAdapter_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter" schemaLocation="../Schemas/TransactionDbAdapter_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="TransactionDbAdapterSelect_inputParameters">
+        <wsdl:part name="TransactionDbAdapterSelect_inputParameters" element="top:TransactionDbAdapterSelect_pkInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="TransactionCollection_msg">
+        <wsdl:part name="TransactionCollection" element="top:TransactionCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="TransactionDbAdapter_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:TransactionCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:TransactionCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <wsdl:input message="tns:TransactionCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <wsdl:input message="tns:TransactionCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="TransactionDbAdapterSelect">
+            <wsdl:input message="tns:TransactionDbAdapterSelect_inputParameters"/>
+            <wsdl:output message="tns:TransactionCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

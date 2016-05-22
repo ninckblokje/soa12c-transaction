@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd">
+<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd" global-variables="false">
   <application-name>DbAdapter</application-name>
   <variable-definition>
     <variable>
       <name>ConnectionInstance_eis/DB/XA/transaction_JNDIName_14639154606910</name>
       <value>eis/DB/XA/transaction</value>
+    </variable>
+    <variable>
+      <name>ConfigProperty_XADataSourceName_Name_14639159579860</name>
+      <value>XADataSourceName</value>
+    </variable>
+    <variable>
+      <name>ConfigProperty_XADataSourceName_Value_14639159579871</name>
+      <value>jdbc/xa/transaction</value>
     </variable>
   </variable-definition>
   <module-override>
@@ -16,6 +24,16 @@
       <variable-assignment>
         <name>ConnectionInstance_eis/DB/XA/transaction_JNDIName_14639154606910</name>
         <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="javax.resource.cci.ConnectionFactory"]/connection-instance/[jndi-name="eis/DB/XA/transaction"]/jndi-name</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+      <variable-assignment>
+        <name>ConfigProperty_XADataSourceName_Name_14639159579860</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="javax.resource.cci.ConnectionFactory"]/connection-instance/[jndi-name="eis/DB/XA/transaction"]/connection-properties/properties/property/[name="XADataSourceName"]/name</xpath>
+        <origin>planbased</origin>
+      </variable-assignment>
+      <variable-assignment>
+        <name>ConfigProperty_XADataSourceName_Value_14639159579871</name>
+        <xpath>/weblogic-connector/outbound-resource-adapter/connection-definition-group/[connection-factory-interface="javax.resource.cci.ConnectionFactory"]/connection-instance/[jndi-name="eis/DB/XA/transaction"]/connection-properties/properties/property/[name="XADataSourceName"]/value</xpath>
         <origin>planbased</origin>
       </variable-assignment>
     </module-descriptor>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="baronprocess_client_ep">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="136" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="129" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="baronprocess_client_ep" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess#wsdl.interface(BaronProcess)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>process</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="TransactionDbAdapter">
+        <dgm:body borderWidth="2" arcRad="20" X="922" Y="123" width="136" height="132">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="912" Y="116" width="156" height="146">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TransactionDbAdapter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>merge</dgm:item>
+            <dgm:item>insert</dgm:item>
+            <dgm:item>update</dgm:item>
+            <dgm:item>delete</dgm:item>
+            <dgm:item>TransactionDbAdapterSelect</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="NewTransactionProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="661" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="651" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="newtransactionprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess#wsdl.interface(NewTransactionProcess)"/>
+        <dgm:outputPort name="TransactionDbAdapter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="TransactionProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="661" Y="121" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="651" Y="114" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="transactionprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess#wsdl.interface(TransactionProcess)"/>
+        <dgm:outputPort name="TransactionDbAdapter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="NoTransactionProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="661" Y="216" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="651" Y="209" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="notransactionprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess#wsdl.interface(NoTransactionProcess)"/>
+        <dgm:outputPort name="TransactionDbAdapter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="BaronProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="400" Y="121" width="130" height="136">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="390" Y="114" width="150" height="152">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="baronprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess#wsdl.interface(BaronProcess)"/>
+        <dgm:outputPort name="NewTransactionProcess.newtransactionprocess_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess#wsdl.interface(NewTransactionProcess)"/>
+        <dgm:outputPort name="TransactionProcess.transactionprocess_client" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess#wsdl.interface(TransactionProcess)"/>
+        <dgm:outputPort name="NoTransactionProcess.notransactionprocess_client" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess#wsdl.interface(NoTransactionProcess)"/>
+        <dgm:outputPort name="TransactionDbAdapter" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="baronprocess_client_ep" target="BaronProcess/baronprocess_client" width="2">
+        <dgm:gSegment X1="168" Y1="146" X2="390" Y2="146"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BaronProcess/NewTransactionProcess.newtransactionprocess_client" target="NewTransactionProcess/newtransactionprocess_client" width="2">
+        <dgm:gSegment X1="540" Y1="146" X2="564" Y2="146"/>
+        <dgm:gSegment X1="564" Y1="146" X2="564" Y2="51"/>
+        <dgm:gSegment X1="564" Y1="51" X2="651" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BaronProcess/TransactionProcess.transactionprocess_client" target="TransactionProcess/transactionprocess_client" width="2">
+        <dgm:gSegment X1="540" Y1="171" X2="579" Y2="171"/>
+        <dgm:gSegment X1="579" Y1="171" X2="579" Y2="146"/>
+        <dgm:gSegment X1="579" Y1="146" X2="651" Y2="146"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BaronProcess/NoTransactionProcess.notransactionprocess_client" target="NoTransactionProcess/notransactionprocess_client" width="2">
+        <dgm:gSegment X1="540" Y1="196" X2="579" Y2="196"/>
+        <dgm:gSegment X1="579" Y1="196" X2="579" Y2="241"/>
+        <dgm:gSegment X1="579" Y1="241" X2="651" Y2="241"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BaronProcess/TransactionDbAdapter" target="TransactionDbAdapter" width="2">
+        <dgm:gSegment X1="540" Y1="221" X2="564" Y2="221"/>
+        <dgm:gSegment X1="564" Y1="221" X2="564" Y2="305"/>
+        <dgm:gSegment X1="564" Y1="305" X2="855" Y2="305"/>
+        <dgm:gSegment X1="855" Y1="305" X2="855" Y2="133"/>
+        <dgm:gSegment X1="855" Y1="133" X2="912" Y2="133"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="NewTransactionProcess/TransactionDbAdapter" target="TransactionDbAdapter" width="2">
+        <dgm:gSegment X1="801" Y1="51" X2="870" Y2="51"/>
+        <dgm:gSegment X1="870" Y1="51" X2="870" Y2="133"/>
+        <dgm:gSegment X1="870" Y1="133" X2="912" Y2="133"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="TransactionProcess/TransactionDbAdapter" target="TransactionDbAdapter" width="2">
+        <dgm:gSegment X1="801" Y1="146" X2="825" Y2="146"/>
+        <dgm:gSegment X1="825" Y1="146" X2="825" Y2="133"/>
+        <dgm:gSegment X1="825" Y1="133" X2="912" Y2="133"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="NoTransactionProcess/TransactionDbAdapter" target="TransactionDbAdapter" width="2">
+        <dgm:gSegment X1="801" Y1="241" X2="840" Y2="241"/>
+        <dgm:gSegment X1="840" Y1="241" X2="840" Y2="133"/>
+        <dgm:gSegment X1="840" Y1="133" X2="912" Y2="133"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

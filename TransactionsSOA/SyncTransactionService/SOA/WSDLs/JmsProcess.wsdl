@@ -27,6 +27,9 @@
 	<wsdl:message name="JmsProcessResponseMessage">
 		<wsdl:part name="payload" element="client:processResponse"/>
 	</wsdl:message>
+        <wsdl:message name="JmsProcessFaultMessage">
+		<wsdl:part name="payload" element="client:processFault"/>
+	</wsdl:message>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PORT TYPE DEFINITION - A port type groups a set of operations into
@@ -38,6 +41,7 @@
 		<wsdl:operation name="process">
 			<wsdl:input  message="client:JmsProcessRequestMessage" />
 			<wsdl:output message="client:JmsProcessResponseMessage"/>
+                        <wsdl:fault name="processFault" message="client:JmsProcessFaultMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 

@@ -1,13 +1,2 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Faults>
-   <Fault>
-      <severity>warning</severity>
-      <loc>/ns:composite/ns:component[@name='SyncTransactionProcess/synctransactionprocess_client']</loc>
-      <line/>
-      <col/>
-      <file>C:\Users\ninckblokje\dev\sources\transactions-soa12c\TransactionsSOA\SyncTransactionService\SOA\composite.xml</file>
-      <name>C:\Users\ninckblokje\dev\sources\transactions-soa12c\TransactionsSOA\SyncTransactionService\SOA\composite.xml</name>
-      <fix/>
-      <msg>The service "synctransactionprocess_client" exposed by component "SyncTransactionProcess" is not wired to/used by any other component.</msg>
-   </Fault>
-</Faults>
+<Faults/>

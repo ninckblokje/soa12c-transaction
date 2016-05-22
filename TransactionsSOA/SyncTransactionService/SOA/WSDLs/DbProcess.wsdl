@@ -27,6 +27,9 @@
 	<wsdl:message name="DbProcessResponseMessage">
 		<wsdl:part name="payload" element="client:processResponse"/>
 	</wsdl:message>
+        <wsdl:message name="DbProcessFaultMessage">
+		<wsdl:part name="payload" element="client:processFault"/>
+	</wsdl:message>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PORT TYPE DEFINITION - A port type groups a set of operations into
@@ -38,6 +41,7 @@
 		<wsdl:operation name="process">
 			<wsdl:input  message="client:DbProcessRequestMessage" />
 			<wsdl:output message="client:DbProcessResponseMessage"/>
+                        <wsdl:fault name="processFault" message="client:DbProcessFaultMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 

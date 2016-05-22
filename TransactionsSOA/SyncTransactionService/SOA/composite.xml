@@ -21,6 +21,13 @@
           location="WSDLs/JmsProcess.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess"
           location="WSDLs/DbProcess.wsdl" importType="wsdl"/>
+  <service name="SyncTransactionService" ui:wsdlLocation="WSDLs/SyncTransactionProcess.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess#wsdl.interface(SyncTransactionProcess)"/>
+    <binding.ws port="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess#wsdl.endpoint(SyncTransactionService/SyncTransactionProcess_pt)">
+      <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">SUPPORTS</property>
+      <property name="weblogic.wsee.wsat.transaction.version" type="xs:string" many="false">DEFAULT</property>
+    </binding.ws>
+  </service>
   <property name="productVersion" type="xs:string" many="false">12.2.1.0.0.151013</property>
   <property name="compositeID" type="xs:string" many="false">910ace2e-719a-4984-aa6a-a4d01d3b2f26</property>
   <property name="validateSchema" type="xs:boolean" many="false">false</property>
@@ -62,6 +69,7 @@
       </reference>
     </componentType>
     <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
+    <property name="bpel.preference.error.handler" type="xs:anyAtomicType" many="false" override="may">throw</property>
   </component>
   <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
@@ -90,5 +98,9 @@
   <wire>
     <source.uri>DbProcess/TransactionDbAdapter</source.uri>
     <target.uri>TransactionDbAdapter</target.uri>
+  </wire>
+  <wire>
+    <source.uri>SyncTransactionService</source.uri>
+    <target.uri>SyncTransactionProcess/synctransactionprocess_client</target.uri>
   </wire>
 </composite>

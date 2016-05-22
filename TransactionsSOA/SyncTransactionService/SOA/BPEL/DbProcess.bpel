@@ -29,7 +29,8 @@
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter">
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
     <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess" location="../WSDLs/DbProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -62,8 +63,37 @@
     <!-- Reference to the message that will be returned to the requester-->
     <variable name="outputVariable" messageType="client:DbProcessResponseMessage"/>
     <variable name="InvokeInsert_insert_InputVariable" messageType="ns1:TransactionCollection_msg"/>
+    <variable name="errorAction" type="xsd:string">
+      <from>ora:getPreference('error.action')</from>
+    </variable>
+    <variable name="processFault" messageType="client:DbProcessFaultMessage"/>
   </variables>
-
+  <faultHandlers>
+    <catchAll>
+      <if name="ErrorAction">
+        <documentation>
+          <![CDATA[Reply]]>
+        </documentation>
+        <condition>$errorAction='reply'</condition>
+        <reply name="ReplyFault" faultName="client:processFault" partnerLink="dbprocess_client"
+               variable="processFault" portType="client:DbProcess" operation="process"/>
+        <elseif>
+          <documentation>
+            <![CDATA[Ignore]]>
+          </documentation>
+          <condition>$errorAction='ignore'</condition>
+          <reply name="ReplyOutput" partnerLink="dbprocess_client" variable="outputVariable"
+                 portType="client:DbProcess" operation="process"/>
+        </elseif>
+        <else>
+          <documentation>
+            <![CDATA[Throw]]>
+          </documentation>
+          <rethrow name="Rethrow"/>
+        </else>
+      </if>
+    </catchAll>
+  </faultHandlers>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      ORCHESTRATION LOGIC                                               

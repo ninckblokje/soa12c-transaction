@@ -4,11 +4,12 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="dbprocess_client" x="7" y="235" side="left"/>
-      <partnerlink name="TransactionDbAdapter" x="1076" y="284" side="right"/>
+      <partnerlink name="dbprocess_client" x="7" y="260" side="left"/>
+      <partnerlink name="TransactionDbAdapter" x="784" y="284" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1221,453" show_swimlanes="true">
+   <graph_layout viewport="0,0,929,644" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll" type="catchall"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>

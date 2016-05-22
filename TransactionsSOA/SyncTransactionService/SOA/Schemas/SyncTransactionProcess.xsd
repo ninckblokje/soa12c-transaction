@@ -17,4 +17,11 @@
 			</sequence>
 		</complexType>
 	</element>
+        <element name="processFault">
+		<complexType>
+			<sequence>
+				<element name="result" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
 </schema>

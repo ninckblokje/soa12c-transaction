@@ -18,7 +18,7 @@
       </schema>
     </wsdl:types>
     <wsdl:message name="TransactionDbAdapterSelect_inputParameters">
-        <wsdl:part name="TransactionDbAdapterSelect_inputParameters" element="top:TransactionDbAdapterSelect_pkInputParameters"/>
+        <wsdl:part name="TransactionDbAdapterSelect_inputParameters" element="top:TransactionDbAdapterSelect_componentNameInputParameters"/>
     </wsdl:message>
     <wsdl:message name="TransactionCollection_msg">
         <wsdl:part name="TransactionCollection" element="top:TransactionCollection"/>

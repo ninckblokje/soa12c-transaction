@@ -11,76 +11,52 @@
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/"
            xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
-  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess"
-          location="WSDLs/NewTransactionProcess.wsdl" importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess"
-          location="WSDLs/TransactionProcess.wsdl" importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess"
-          location="WSDLs/NoTransactionProcess.wsdl" importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess"
-          location="WSDLs/BaronProcess.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter"
           location="WSDLs/TransactionDbAdapter.wsdl" importType="wsdl"/>
-  <service name="baronprocess_client_ep" ui:wsdlLocation="WSDLs/BaronProcess.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess#wsdl.interface(BaronProcess)"/>
-    <binding.ws port="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess#wsdl.endpoint(baronprocess_client_ep/BaronProcess_pt)"/>
-  </service>
+  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
+          location="WSDLs/SyncTransactionProcess.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/SyncTransactionService/TransactionJmsAdapter"
+          location="WSDLs/TransactionJmsAdapter.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess"
+          location="WSDLs/JmsProcess.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess"
+          location="WSDLs/DbProcess.wsdl" importType="wsdl"/>
   <property name="productVersion" type="xs:string" many="false">12.2.1.0.0.151013</property>
   <property name="compositeID" type="xs:string" many="false">910ace2e-719a-4984-aa6a-a4d01d3b2f26</property>
   <property name="validateSchema" type="xs:boolean" many="false">false</property>
-  <component name="NewTransactionProcess" version="2.0">
-    <implementation.bpel src="BPEL/NewTransactionProcess.bpel"/>
+  <component name="SyncTransactionProcess" version="2.0">
+    <implementation.bpel src="BPEL/SyncTransactionProcess.bpel"/>
     <componentType>
-      <service name="newtransactionprocess_client" ui:wsdlLocation="WSDLs/NewTransactionProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess#wsdl.interface(NewTransactionProcess)"/>
+      <service name="synctransactionprocess_client" ui:wsdlLocation="WSDLs/SyncTransactionProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess#wsdl.interface(SyncTransactionProcess)"/>
       </service>
-      <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+      <reference name="JmsProcess.jmsprocess_client" ui:wsdlLocation="WSDLs/JmsProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess#wsdl.interface(JmsProcess)"/>
       </reference>
-    </componentType>
-    <property name="bpel.config.transaction" type="xs:string" many="false">requiresNew</property>
-  </component>
-  <component name="TransactionProcess" version="2.0">
-    <implementation.bpel src="BPEL/TransactionProcess.bpel"/>
-    <componentType>
-      <service name="transactionprocess_client" ui:wsdlLocation="WSDLs/TransactionProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess#wsdl.interface(TransactionProcess)"/>
-      </service>
-      <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+      <reference name="DbProcess.dbprocess_client" ui:wsdlLocation="WSDLs/DbProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess#wsdl.interface(DbProcess)"/>
       </reference>
     </componentType>
     <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
   </component>
-  <component name="NoTransactionProcess" version="2.0">
-    <implementation.bpel src="BPEL/NoTransactionProcess.bpel"/>
+  <component name="JmsProcess" version="2.0">
+    <implementation.bpel src="BPEL/JmsProcess.bpel"/>
     <componentType>
-      <service name="notransactionprocess_client" ui:wsdlLocation="WSDLs/NoTransactionProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess#wsdl.interface(NoTransactionProcess)"/>
+      <service name="jmsprocess_client" ui:wsdlLocation="WSDLs/JmsProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess#wsdl.interface(JmsProcess)"/>
       </service>
-      <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+      <reference name="TransactionJmsAdapter" ui:wsdlLocation="WSDLs/TransactionJmsAdapter.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/SyncTransactionService/TransactionJmsAdapter#wsdl.interface(Produce_Message_ptt)"/>
       </reference>
     </componentType>
-    <property name="bpel.config.transaction" type="xs:string" many="false">notSupported</property>
+    <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
   </component>
-  <component name="BaronProcess" version="2.0">
-    <implementation.bpel src="BPEL/BaronProcess.bpel"/>
+  <component name="DbProcess" version="2.0">
+    <implementation.bpel src="BPEL/DbProcess.bpel"/>
     <componentType>
-      <service name="baronprocess_client" ui:wsdlLocation="WSDLs/BaronProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess#wsdl.interface(BaronProcess)"/>
+      <service name="dbprocess_client" ui:wsdlLocation="WSDLs/DbProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess#wsdl.interface(DbProcess)"/>
       </service>
-      <reference name="NewTransactionProcess.newtransactionprocess_client"
-                 ui:wsdlLocation="WSDLs/NewTransactionProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess#wsdl.interface(NewTransactionProcess)"/>
-      </reference>
-      <reference name="TransactionProcess.transactionprocess_client" ui:wsdlLocation="WSDLs/TransactionProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess#wsdl.interface(TransactionProcess)"/>
-      </reference>
-      <reference name="NoTransactionProcess.notransactionprocess_client"
-                 ui:wsdlLocation="WSDLs/NoTransactionProcess.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess#wsdl.interface(NoTransactionProcess)"/>
-      </reference>
       <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
         <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
       </reference>
@@ -95,36 +71,24 @@
     <property name="jca.retry.backoff" type="xs:int" many="false" override="may">2</property>
     <property name="jca.retry.maxInterval" type="xs:int" many="false" override="may">120</property>
   </reference>
+  <reference name="TransactionJmsAdapter" ui:wsdlLocation="WSDLs/TransactionJmsAdapter.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/SyncTransactionService/TransactionJmsAdapter#wsdl.interface(Produce_Message_ptt)"/>
+    <binding.jca config="Adapters/TransactionJmsAdapter_jms.jca"/>
+  </reference>
   <wire>
-    <source.uri>baronprocess_client_ep</source.uri>
-    <target.uri>BaronProcess/baronprocess_client</target.uri>
+    <source.uri>SyncTransactionProcess/JmsProcess.jmsprocess_client</source.uri>
+    <target.uri>JmsProcess/jmsprocess_client</target.uri>
   </wire>
   <wire>
-    <source.uri>BaronProcess/NewTransactionProcess.newtransactionprocess_client</source.uri>
-    <target.uri>NewTransactionProcess/newtransactionprocess_client</target.uri>
+    <source.uri>SyncTransactionProcess/DbProcess.dbprocess_client</source.uri>
+    <target.uri>DbProcess/dbprocess_client</target.uri>
   </wire>
   <wire>
-    <source.uri>BaronProcess/TransactionProcess.transactionprocess_client</source.uri>
-    <target.uri>TransactionProcess/transactionprocess_client</target.uri>
+    <source.uri>JmsProcess/TransactionJmsAdapter</source.uri>
+    <target.uri>TransactionJmsAdapter</target.uri>
   </wire>
   <wire>
-    <source.uri>BaronProcess/NoTransactionProcess.notransactionprocess_client</source.uri>
-    <target.uri>NoTransactionProcess/notransactionprocess_client</target.uri>
-  </wire>
-  <wire>
-    <source.uri>BaronProcess/TransactionDbAdapter</source.uri>
-    <target.uri>TransactionDbAdapter</target.uri>
-  </wire>
-  <wire>
-    <source.uri>NewTransactionProcess/TransactionDbAdapter</source.uri>
-    <target.uri>TransactionDbAdapter</target.uri>
-  </wire>
-  <wire>
-    <source.uri>TransactionProcess/TransactionDbAdapter</source.uri>
-    <target.uri>TransactionDbAdapter</target.uri>
-  </wire>
-  <wire>
-    <source.uri>NoTransactionProcess/TransactionDbAdapter</source.uri>
+    <source.uri>DbProcess/TransactionDbAdapter</source.uri>
     <target.uri>TransactionDbAdapter</target.uri>
   </wire>
 </composite>

@@ -6,22 +6,23 @@
          <class>TransactionDbAdapter.Transaction</class>
          <alias>TRANSACTION</alias>
          <primary-key>
-            <field table="TRANSACTION" name="PK" xsi:type="column"/>
+            <field table="TRANSACTION" name="COMPONENT_NAME" xsi:type="column"/>
+            <field table="TRANSACTION" name="COMPOSITE_NAME" xsi:type="column"/>
          </primary-key>
          <events/>
          <querying>
             <queries>
                <query name="TransactionDbAdapterSelect" xsi:type="read-all-query">
                   <criteria operator="equal" xsi:type="relation-expression">
-                     <left name="pk" xsi:type="query-key-expression">
+                     <left name="componentName" xsi:type="query-key-expression">
                         <base xsi:type="base-expression"/>
                      </left>
                      <right xsi:type="parameter-expression">
-                        <parameter name="pk" xsi:type="column"/>
+                        <parameter name="componentName" xsi:type="column"/>
                      </right>
                   </criteria>
                   <arguments>
-                     <argument name="pk">
+                     <argument name="componentName">
                         <type>java.lang.String</type>
                      </argument>
                   </arguments>
@@ -34,23 +35,18 @@
          </querying>
          <attribute-mappings>
             <attribute-mapping xsi:type="direct-mapping">
-               <attribute-name>pk</attribute-name>
-               <field table="TRANSACTION" name="PK" xsi:type="column"/>
-               <attribute-classification>java.lang.Long</attribute-classification>
-            </attribute-mapping>
-            <attribute-mapping xsi:type="direct-mapping">
-               <attribute-name>value1</attribute-name>
-               <field table="TRANSACTION" name="VALUE_1" xsi:type="column"/>
+               <attribute-name>componentName</attribute-name>
+               <field table="TRANSACTION" name="COMPONENT_NAME" xsi:type="column"/>
                <attribute-classification>java.lang.String</attribute-classification>
             </attribute-mapping>
             <attribute-mapping xsi:type="direct-mapping">
-               <attribute-name>value2</attribute-name>
-               <field table="TRANSACTION" name="VALUE_2" xsi:type="column"/>
+               <attribute-name>compositeName</attribute-name>
+               <field table="TRANSACTION" name="COMPOSITE_NAME" xsi:type="column"/>
                <attribute-classification>java.lang.String</attribute-classification>
             </attribute-mapping>
             <attribute-mapping xsi:type="direct-mapping">
-               <attribute-name>updatedTime</attribute-name>
-               <field table="TRANSACTION" name="UPDATED_TIME" xsi:type="column"/>
+               <attribute-name>updateTime</attribute-name>
+               <field table="TRANSACTION" name="UPDATE_TIME" xsi:type="column"/>
                <attribute-classification>java.sql.Timestamp</attribute-classification>
             </attribute-mapping>
          </attribute-mappings>

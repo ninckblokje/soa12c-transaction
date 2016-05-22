@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="BaronProcess"
-             targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess"
+<wsdl:definitions name="SyncTransactionProcess"
+             targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess"
+             xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
              xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -13,7 +13,7 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
 	<wsdl:types>
 		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/BaronProcess" schemaLocation="../Schemas/BaronProcess.xsd" />
+			<import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess" schemaLocation="../Schemas/SyncTransactionProcess.xsd" />
 		</schema>
 	</wsdl:types>
 
@@ -21,10 +21,10 @@
 	MESSAGE TYPE DEFINITION - Definition of the message types used as 
 	part of the port type defintions
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
-	<wsdl:message name="BaronProcessRequestMessage">
+	<wsdl:message name="SyncTransactionProcessRequestMessage">
 		<wsdl:part name="payload" element="client:process"/>
 	</wsdl:message>
-	<wsdl:message name="BaronProcessResponseMessage">
+	<wsdl:message name="SyncTransactionProcessResponseMessage">
 		<wsdl:part name="payload" element="client:processResponse"/>
 	</wsdl:message>
 
@@ -33,18 +33,18 @@
 	a logical service unit.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	<!-- portType implemented by the BaronProcess BPEL process -->
-	<wsdl:portType name="BaronProcess">
+	<!-- portType implemented by the SyncTransactionProcess BPEL process -->
+	<wsdl:portType name="SyncTransactionProcess">
 		<wsdl:operation name="process">
-			<wsdl:input  message="client:BaronProcessRequestMessage" />
-			<wsdl:output message="client:BaronProcessResponseMessage"/>
+			<wsdl:input  message="client:SyncTransactionProcessRequestMessage" />
+			<wsdl:output message="client:SyncTransactionProcessResponseMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PARTNER LINK TYPE DEFINITION
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
-	<plnk:partnerLinkType name="BaronProcess">
-		<plnk:role name="BaronProcessProvider" portType="client:BaronProcess"/>
+	<plnk:partnerLinkType name="SyncTransactionProcess">
+		<plnk:role name="SyncTransactionProcessProvider" portType="client:SyncTransactionProcess"/>
 	</plnk:partnerLinkType>
 </wsdl:definitions>

@@ -4,13 +4,12 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="notransactionprocess_client" x="0" y="274" side="left"/>
-      <partnerlink name="TransactionDbAdapter" x="1076" y="323" side="right"/>
+      <partnerlink name="jmsprocess_client" x="5" y="235" side="left"/>
+      <partnerlink name="TransactionJmsAdapter" x="1071" y="284" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1221,467" show_swimlanes="true">
+   <graph_layout viewport="0,0,1221,453" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
-      <layout_item collapsed="false" xpath="/process/sequence/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

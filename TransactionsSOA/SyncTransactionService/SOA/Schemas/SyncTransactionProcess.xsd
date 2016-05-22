@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <schema attributeFormDefault="unqualified"
 	elementFormDefault="qualified"
-	targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess"
+	targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
 	xmlns="http://www.w3.org/2001/XMLSchema">
 	<element name="process">
 		<complexType>

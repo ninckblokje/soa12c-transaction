@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sun May 22 22:34:22 CEST 2016
+  Author:  ninckblokje
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="SyncTransactionProcess"
+               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter"
+         xmlns:ns2="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/FirstTransactionProcess"
+         xmlns:ns3="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess"
+         xmlns:ns4="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess" location="../WSDLs/SyncTransactionProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="synctransactionprocess_client" partnerLinkType="client:SyncTransactionProcess" myRole="SyncTransactionProcessProvider"/>
+    <partnerLink name="JmsProcess.jmsprocess_client" partnerLinkType="ns3:JmsProcess" partnerRole="JmsProcessProvider"/>
+    <partnerLink name="DbProcess.dbprocess_client" partnerLinkType="ns4:DbProcess" partnerRole="DbProcessProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:SyncTransactionProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:SyncTransactionProcessResponseMessage"/>
+    <variable name="InvokeJmsProces_process_InputVariable" messageType="ns3:JmsProcessRequestMessage"/>
+    <variable name="InvokeJmsProces_process_OutputVariable" messageType="ns3:JmsProcessResponseMessage"/>
+    <variable name="InvokeDbProcess_process_InputVariable" messageType="ns4:DbProcessRequestMessage"/>
+    <variable name="InvokeDbProcess_process_OutputVariable" messageType="ns4:DbProcessResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in SyncTransactionProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="synctransactionprocess_client" portType="client:SyncTransactionProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <invoke name="InvokeJmsProces" bpelx:invokeAsDetail="no" partnerLink="JmsProcess.jmsprocess_client"
+            portType="ns3:JmsProcess" operation="process" inputVariable="InvokeJmsProces_process_InputVariable"
+            outputVariable="InvokeJmsProces_process_OutputVariable"/>
+    <invoke name="InvokeDbProcess" bpelx:invokeAsDetail="no" partnerLink="DbProcess.dbprocess_client"
+            portType="ns4:DbProcess" operation="process" inputVariable="InvokeDbProcess_process_InputVariable"
+            outputVariable="InvokeDbProcess_process_OutputVariable"/>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="synctransactionprocess_client" portType="client:SyncTransactionProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="NewTransactionProcess"
-             targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess"
+<wsdl:definitions name="DbProcess"
+             targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess"
+             xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess"
              xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -13,7 +13,7 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
 	<wsdl:types>
 		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NewTransactionProcess" schemaLocation="../Schemas/NewTransactionProcess.xsd" />
+			<import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess" schemaLocation="../Schemas/DbProcess.xsd" />
 		</schema>
 	</wsdl:types>
 
@@ -21,10 +21,10 @@
 	MESSAGE TYPE DEFINITION - Definition of the message types used as 
 	part of the port type defintions
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
-	<wsdl:message name="NewTransactionProcessRequestMessage">
+	<wsdl:message name="DbProcessRequestMessage">
 		<wsdl:part name="payload" element="client:process"/>
 	</wsdl:message>
-	<wsdl:message name="NewTransactionProcessResponseMessage">
+	<wsdl:message name="DbProcessResponseMessage">
 		<wsdl:part name="payload" element="client:processResponse"/>
 	</wsdl:message>
 
@@ -33,18 +33,18 @@
 	a logical service unit.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	<!-- portType implemented by the NewTransactionProcess BPEL process -->
-	<wsdl:portType name="NewTransactionProcess">
+	<!-- portType implemented by the DbProcess BPEL process -->
+	<wsdl:portType name="DbProcess">
 		<wsdl:operation name="process">
-			<wsdl:input  message="client:NewTransactionProcessRequestMessage" />
-			<wsdl:output message="client:NewTransactionProcessResponseMessage"/>
+			<wsdl:input  message="client:DbProcessRequestMessage" />
+			<wsdl:output message="client:DbProcessResponseMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PARTNER LINK TYPE DEFINITION
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
-	<plnk:partnerLinkType name="NewTransactionProcess">
-		<plnk:role name="NewTransactionProcessProvider" portType="client:NewTransactionProcess"/>
+	<plnk:partnerLinkType name="DbProcess">
+		<plnk:role name="DbProcessProvider" portType="client:DbProcess"/>
 	</plnk:partnerLinkType>
 </wsdl:definitions>

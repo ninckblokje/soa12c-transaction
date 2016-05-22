@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="NoTransactionProcess"
-             targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess"
+<wsdl:definitions name="JmsProcess"
+             targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess"
+             xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess"
              xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -13,7 +13,7 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
 	<wsdl:types>
 		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/NoTransactionProcess" schemaLocation="../Schemas/NoTransactionProcess.xsd" />
+			<import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess" schemaLocation="../Schemas/JmsProcess.xsd" />
 		</schema>
 	</wsdl:types>
 
@@ -21,10 +21,10 @@
 	MESSAGE TYPE DEFINITION - Definition of the message types used as 
 	part of the port type defintions
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
-	<wsdl:message name="NoTransactionProcessRequestMessage">
+	<wsdl:message name="JmsProcessRequestMessage">
 		<wsdl:part name="payload" element="client:process"/>
 	</wsdl:message>
-	<wsdl:message name="NoTransactionProcessResponseMessage">
+	<wsdl:message name="JmsProcessResponseMessage">
 		<wsdl:part name="payload" element="client:processResponse"/>
 	</wsdl:message>
 
@@ -33,18 +33,18 @@
 	a logical service unit.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	<!-- portType implemented by the NoTransactionProcess BPEL process -->
-	<wsdl:portType name="NoTransactionProcess">
+	<!-- portType implemented by the JmsProcess BPEL process -->
+	<wsdl:portType name="JmsProcess">
 		<wsdl:operation name="process">
-			<wsdl:input  message="client:NoTransactionProcessRequestMessage" />
-			<wsdl:output message="client:NoTransactionProcessResponseMessage"/>
+			<wsdl:input  message="client:JmsProcessRequestMessage" />
+			<wsdl:output message="client:JmsProcessResponseMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PARTNER LINK TYPE DEFINITION
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
-	<plnk:partnerLinkType name="NoTransactionProcess">
-		<plnk:role name="NoTransactionProcessProvider" portType="client:NoTransactionProcess"/>
+	<plnk:partnerLinkType name="JmsProcess">
+		<plnk:role name="JmsProcessProvider" portType="client:JmsProcess"/>
 	</plnk:partnerLinkType>
 </wsdl:definitions>

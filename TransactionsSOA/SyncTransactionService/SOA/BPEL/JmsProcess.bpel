@@ -3,21 +3,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   Oracle JDeveloper BPEL Designer 
   
-  Created: Sun May 22 11:06:17 CEST 2016
+  Created: Sun May 22 23:01:30 CEST 2016
   Author:  ninckblokje
   Type: BPEL 2.0 Process
   Purpose: Synchronous BPEL Process
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-<process name="TransactionProcess"
-               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess"
+<process name="JmsProcess"
+               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess"
                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess"
+               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess"
                xmlns:ora="http://schemas.oracle.com/xpath/extension"
                xmlns:ui="http://xmlns.oracle.com/soa/designer"
                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/SyncTransactionService/TransactionJmsAdapter"
          xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
          xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
          xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
@@ -31,7 +31,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter">
 
-    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/TransactionProcess" location="../WSDLs/TransactionProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/JmsProcess" location="../WSDLs/JmsProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         PARTNERLINKS                                                      
@@ -44,9 +44,9 @@
       used for callback. The location and correlation information associated
       with the client role are automatically set using WS-Addressing.
     -->
-    <partnerLink name="transactionprocess_client" partnerLinkType="client:TransactionProcess" myRole="TransactionProcessProvider"/>
-    <partnerLink name="TransactionDbAdapter" partnerLinkType="ns1:TransactionDbAdapter_plt"
-                 partnerRole="TransactionDbAdapter_role"/>
+    <partnerLink name="jmsprocess_client" partnerLinkType="client:JmsProcess" myRole="JmsProcessProvider"/>
+    <partnerLink name="TransactionJmsAdapter" partnerLinkType="ns1:Produce_Message_plt"
+                 partnerRole="Produce_Message_role"/>
   </partnerLinks>
 
   <!-- 
@@ -57,11 +57,11 @@
   -->
   <variables>
     <!-- Reference to the message passed as input during initiation -->
-    <variable name="inputVariable" messageType="client:TransactionProcessRequestMessage"/>
+    <variable name="inputVariable" messageType="client:JmsProcessRequestMessage"/>
 
     <!-- Reference to the message that will be returned to the requester-->
-    <variable name="outputVariable" messageType="client:TransactionProcessResponseMessage"/>
-    <variable name="InvokeMerge_merge_InputVariable" messageType="ns1:TransactionCollection_msg"/>
+    <variable name="outputVariable" messageType="client:JmsProcessResponseMessage"/>
+    <variable name="InvokeProduce_Produce_Message_InputVariable" messageType="ns1:Produce_Message_msg"/>
   </variables>
 
   <!-- 
@@ -73,28 +73,22 @@
   -->
   <sequence name="main">
 
-    <!-- Receive input from requestor. (Note: This maps to operation defined in TransactionProcess.wsdl) -->
-    <receive name="receiveInput" partnerLink="transactionprocess_client" portType="client:TransactionProcess" operation="process" variable="inputVariable" createInstance="yes"/>
-    <sequence name="MergeSequence">
-      <assign name="AssignMergeRequest">
-        <copy>
-          <from>2</from>
-          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeMerge_merge_InputVariable.TransactionCollection/ns2:Transaction/ns2:pk</to>
-        </copy>
-        <copy>
-          <from>ora:getComponentName()</from>
-          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeMerge_merge_InputVariable.TransactionCollection/ns2:Transaction/ns2:value1</to>
-        </copy>
-        <copy>
-          <from>ora:getCompositeName()</from>
-          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeMerge_merge_InputVariable.TransactionCollection/ns2:Transaction/ns2:value2</to>
-        </copy>
-      </assign>
-      <invoke name="InvokeMerge" bpelx:invokeAsDetail="no" partnerLink="TransactionDbAdapter"
-              portType="ns1:TransactionDbAdapter_ptt" operation="merge"
-              inputVariable="InvokeMerge_merge_InputVariable"/>
-    </sequence>
+    <!-- Receive input from requestor. (Note: This maps to operation defined in JmsProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="jmsprocess_client" portType="client:JmsProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignProduceRequest">
+      <copy>
+        <from>ora:getComponentName()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeProduce_Produce_Message_InputVariable.body/ns2:Transaction/ns2:componentName</to>
+      </copy>
+      <copy>
+        <from>ora:getCompositeName()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeProduce_Produce_Message_InputVariable.body/ns2:Transaction/ns2:compositeName</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeProduce" bpelx:invokeAsDetail="no" partnerLink="TransactionJmsAdapter"
+            portType="ns1:Produce_Message_ptt" operation="Produce_Message"
+            inputVariable="InvokeProduce_Produce_Message_InputVariable"/>
     <!-- Generate reply to synchronous request -->
-    <reply name="replyOutput" partnerLink="transactionprocess_client" portType="client:TransactionProcess" operation="process" variable="outputVariable"/>
+    <reply name="replyOutput" partnerLink="jmsprocess_client" portType="client:JmsProcess" operation="process" variable="outputVariable"/>
   </sequence>
 </process>

@@ -1,24 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-   <entry key="TRANSACTION.VALUE_2:db_column_type">VARCHAR2</entry>
-   <entry key="TRANSACTION.VALUE_1:db_column_not_null">false</entry>
-   <entry key="TRANSACTION.VALUE_1:db_column_size">255</entry>
-   <entry key="TRANSACTION.UPDATED_TIME:db_column_scale">6</entry>
-   <entry key="TRANSACTION:db_column_3">UPDATED_TIME</entry>
-   <entry key="TRANSACTION:db_column_2">VALUE_2</entry>
-   <entry key="TRANSACTION.PK:db_column_precision">10</entry>
-   <entry key="TRANSACTION:db_column_1">VALUE_1</entry>
-   <entry key="TRANSACTION:db_column_0">PK</entry>
-   <entry key="TRANSACTION.VALUE_2:db_column_size">255</entry>
+   <entry key="TRANSACTION.UPDATE_TIME:db_column_type">TIMESTAMP</entry>
+   <entry key="TRANSACTION.COMPONENT_NAME:db_column_not_null">true</entry>
+   <entry key="TRANSACTION.COMPOSITE_NAME:db_column_type">VARCHAR2</entry>
+   <entry key="TRANSACTION:db_column_2">UPDATE_TIME</entry>
+   <entry key="TRANSACTION:db_column_1">COMPOSITE_NAME</entry>
+   <entry key="TRANSACTION:db_column_0">COMPONENT_NAME</entry>
+   <entry key="TRANSACTION.COMPONENT_NAME:db_column_type">VARCHAR2</entry>
+   <entry key="TRANSACTION.UPDATE_TIME:db_column_scale">6</entry>
+   <entry key="TRANSACTION.COMPOSITE_NAME:db_column_not_null">true</entry>
    <entry key="return_single_result_set">false</entry>
-   <entry key="TRANSACTION.UPDATED_TIME:db_column_not_null">true</entry>
-   <entry key="TRANSACTION.PK:db_column_type">NUMBER</entry>
-   <entry key="TRANSACTION.PK:db_column_not_null">true</entry>
-   <entry key="TRANSACTION.UPDATED_TIME:db_column_type">TIMESTAMP</entry>
+   <entry key="TRANSACTION.COMPOSITE_NAME:db_column_size">255</entry>
    <entry key="root_descriptor_alias">TRANSACTION</entry>
-   <entry key="TRANSACTION.VALUE_1:db_column_type">VARCHAR2</entry>
+   <entry key="TRANSACTION.COMPONENT_NAME:db_column_size">255</entry>
    <entry key="TRANSACTION:db_table_type">TABLE</entry>
-   <entry key="TRANSACTION.VALUE_2:db_column_not_null">false</entry>
-   <entry key="TRANSACTION.PK:db_column_scale">0</entry>
+   <entry key="TRANSACTION.UPDATE_TIME:db_column_not_null">true</entry>
 </properties>

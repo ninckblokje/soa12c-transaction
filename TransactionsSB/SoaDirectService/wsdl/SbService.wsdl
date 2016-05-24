@@ -1,0 +1,58 @@
+<wsdl:definitions name="SoaDirectProcess" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+    <wsdl:documentation>
+        <abstractWSDL>https://DESKTOP-T7VHRK1:7102/soa-infra/directWsdl/default/SbService!1.0/SoaDirectService?resource=%2FWSDLs%2FSoaDirectProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+  <plnk:partnerLinkType name="SoaDirectProcess">
+    <plnk:role name="SoaDirectProcessProvider" portType="client:SoaDirectProcess"/>
+  </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess"
+                    schemaLocation="../schema/SbService.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="SoaDirectProcessRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="SoaDirectProcessResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="SoaDirectProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:SoaDirectProcessRequestMessage"/>
+            <wsdl:output message="client:SoaDirectProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SoaDirectProcessDirectBinding1.1" type="client:SoaDirectProcess">
+        <soap:binding transport="http://xmlns.oracle.com/soa/direct" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SoaDirectProcessDirectBinding1.2" type="client:SoaDirectProcess">
+        <soap12:binding transport="http://xmlns.oracle.com/soa/direct" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+        <wsdl:operation name="process">
+            <soap12:operation style="document" soapAction="process" soapActionRequired="false" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SoaDirectService">
+        <wsdl:port name="SoaDirectServiceDirectBindingPort11" binding="client:SoaDirectProcessDirectBinding1.1">
+            <soap:address location="t3://DESKTOP-T7VHRK1:7101/default/SbService!1.0/SoaDirectService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        </wsdl:port>
+        <wsdl:port name="SoaDirectServiceDirectBindingPort12" binding="client:SoaDirectProcessDirectBinding1.2">
+            <soap12:address location="t3://DESKTOP-T7VHRK1:7101/default/SbService!1.0/SoaDirectService" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

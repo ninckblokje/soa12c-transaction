@@ -1,2 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm"/>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="asynctransactionprocess_client_ep">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="150" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="143" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="asynctransactionprocess_client_ep" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess#wsdl.interface(AsyncTransactionProcess)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>process</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="TransactionDbAdapter">
+        <dgm:body borderWidth="2" arcRad="20" X="1130" Y="41" width="136" height="132">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1120" Y="34" width="156" height="146">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TransactionDbAdapter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/ASyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>merge</dgm:item>
+            <dgm:item>insert</dgm:item>
+            <dgm:item>update</dgm:item>
+            <dgm:item>delete</dgm:item>
+            <dgm:item>TransactionDbAdapterSelect</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="TransactionJmsAdapter">
+        <dgm:body borderWidth="2" arcRad="20" X="1130" Y="207" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1120" Y="200" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TransactionJmsAdapter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/ASyncTransactionService/TransactionJmsAdapter#wsdl.interface(Produce_Message_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/jms_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>Produce_Message</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="ASyncJmsProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="817" Y="192" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="807" Y="185" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="asyncjmsprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcess)" callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcessCallback)"/>
+        <dgm:outputPort name="TransactionJmsAdapter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/ASyncTransactionService/TransactionJmsAdapter#wsdl.interface(Produce_Message_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="ASyncDbProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="817" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="807" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="asyncdbprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcess)" callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcessCallback)"/>
+        <dgm:outputPort name="TransactionDbAdapter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/ASyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="AsyncTransactionProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="504" Y="135" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="494" Y="128" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="asynctransactionprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess#wsdl.interface(AsyncTransactionProcess)"/>
+        <dgm:outputPort name="ASyncDbProcess.asyncdbprocess_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcess)" callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcessCallback)"/>
+        <dgm:outputPort name="ASyncJmsProcess.asyncjmsprocess_client" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcess)" callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcessCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="ASyncJmsProcess/TransactionJmsAdapter" target="TransactionJmsAdapter" width="2">
+        <dgm:gSegment X1="957" Y1="217" X2="1120" Y2="217"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ASyncDbProcess/TransactionDbAdapter" target="TransactionDbAdapter" width="2">
+        <dgm:gSegment X1="957" Y1="51" X2="1120" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="asynctransactionprocess_client_ep" target="AsyncTransactionProcess/asynctransactionprocess_client" width="2">
+        <dgm:gSegment X1="168" Y1="160" X2="494" Y2="160"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AsyncTransactionProcess/ASyncDbProcess.asyncdbprocess_client" target="ASyncDbProcess/asyncdbprocess_client" width="2">
+        <dgm:gSegment X1="644" Y1="160" X2="668" Y2="160"/>
+        <dgm:gSegment X1="668" Y1="160" X2="668" Y2="51"/>
+        <dgm:gSegment X1="668" Y1="51" X2="807" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AsyncTransactionProcess/ASyncJmsProcess.asyncjmsprocess_client" target="ASyncJmsProcess/asyncjmsprocess_client" width="2">
+        <dgm:gSegment X1="644" Y1="185" X2="668" Y2="185"/>
+        <dgm:gSegment X1="668" Y1="185" X2="668" Y2="217"/>
+        <dgm:gSegment X1="668" Y1="217" X2="807" Y2="217"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

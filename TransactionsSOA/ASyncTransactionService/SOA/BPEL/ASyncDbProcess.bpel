@@ -1,0 +1,132 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue May 24 15:37:36 CEST 2016
+  Author:  ninckblokje
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ASyncDbProcess"
+         targetNamespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/ASyncTransactionService/TransactionDbAdapter"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess" location="../WSDLs/ASyncDbProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="asyncdbprocess_client" partnerLinkType="client:ASyncDbProcess" myRole="ASyncDbProcessProvider" partnerRole="ASyncDbProcessRequester"/>
+        <partnerLink name="TransactionDbAdapter" partnerLinkType="ns1:TransactionDbAdapter_plt"
+                     partnerRole="TransactionDbAdapter_role"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:ASyncDbProcessRequestMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="client:ASyncDbProcessResponseMessage"/>
+        <variable name="InvokeInsert_insert_InputVariable" messageType="ns1:TransactionCollection_msg"/>
+        <variable name="errorAction" type="xsd:string">
+            <from xmlns:ora="http://schemas.oracle.com/xpath/extension">ora:getPreference('error.action')</from>
+        </variable>
+    </variables>
+    <faultHandlers>
+        <catchAll>
+            <if name="ErrorAction">
+                <documentation>
+                    <![CDATA[Throw]]>
+                </documentation>
+                <condition>$errorAction='throw'</condition>
+                <rethrow name="Rethrow"/>
+                <elseif>
+                    <documentation>
+                        <![CDATA[Nothing]]>
+                    </documentation>
+                    <condition>$errorAction='nothing'</condition>
+                    <empty name="Empty"/>
+                </elseif>
+                <elseif>
+                    <documentation>
+                        <![CDATA[Rollback]]>
+                    </documentation>
+                    <condition>$errorAction='rollback'</condition>
+                    <throw name="ThrowRollback" faultName="bpelx:rollback"/>
+                </elseif>
+                <else>
+                    <documentation>
+                        <![CDATA[Reply]]>
+                    </documentation>
+                    <invoke name="InvokeReply" partnerLink="asyncdbprocess_client"
+                            portType="client:ASyncDbProcessCallback" operation="processResponse"
+                            inputVariable="outputVariable" bpelx:invokeAsDetail="no"/>
+                </else>
+            </if>
+        </catchAll>
+    </faultHandlers>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in ASyncDbProcess.wsdl) -->
+        <receive name="receiveInput" partnerLink="asyncdbprocess_client" portType="client:ASyncDbProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+        <assign name="AssignInsertRequest">
+            <copy>
+                <from>ora:getComponentName()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInsert_insert_InputVariable.TransactionCollection/ns2:Transaction/ns2:componentName</to>
+            </copy>
+            <copy>
+                <from>ora:getCompositeName()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInsert_insert_InputVariable.TransactionCollection/ns2:Transaction/ns2:compositeName</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeInsert" bpelx:invokeAsDetail="no" partnerLink="TransactionDbAdapter"
+                portType="ns1:TransactionDbAdapter_ptt" operation="insert"
+                inputVariable="InvokeInsert_insert_InputVariable"/>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="asyncdbprocess_client" portType="client:ASyncDbProcessCallback" operation="processResponse" inputVariable="outputVariable"/>
+    </sequence>
+</process>

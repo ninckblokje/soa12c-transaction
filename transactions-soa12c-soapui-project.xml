@@ -131,4 +131,53 @@
    <soapenv:Body>\r
       <soad:string>?</soad:string>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="execute"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="execute"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="18d12b53-7f72-4359-80e3-e465575703d9" wsaVersion="NONE" name="AsyncTransactionProcessBinding" type="wsdl" bindingName="{http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess}AsyncTransactionProcessBinding" soapVersion="1_1" anonymous="optional" definition="http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep?WSDL"><con:part><con:url>http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep?WSDL</con:url><con:content><![CDATA[<wsdl:definitions name="AsyncTransactionProcess" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>
+    <abstractWSDL>http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService!1.0/WSDLs/AsyncTransactionProcess.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <plnk:partnerLinkType name="AsyncTransactionProcess">
+    <plnk:role name="AsyncTransactionProcessProvider" portType="client:AsyncTransactionProcess"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess" schemaLocation="http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep?XSD=../Schemas/AsyncTransactionProcess.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="AsyncTransactionProcessRequestMessage">
+    <wsdl:part name="payload" element="client:process"/>
+  </wsdl:message>
+  <wsdl:portType name="AsyncTransactionProcess">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:AsyncTransactionProcessRequestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AsyncTransactionProcessBinding" type="client:AsyncTransactionProcess">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="process">
+      <soap:operation style="document" soapAction="process"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="asynctransactionprocess_client_ep">
+    <wsdl:port name="AsyncTransactionProcess_pt" binding="client:AsyncTransactionProcessBinding">
+      <soap:address location="http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep?XSD=../Schemas/AsyncTransactionProcess.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="process">
+    <complexType>
+      <sequence>
+        <element name="input" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep</con:endpoint></con:endpoints><con:operation id="76a17e73-d5ab-4212-8e73-57d2cb27c840" isOneWay="false" action="process" name="process" bindingOperationName="process" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ab3a70be-8fbe-470b-995d-e5e4e8820113" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-t7vhrk1:7101/soa-infra/services/default/ASyncTransactionService/asynctransactionprocess_client_ep</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:asy="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <asy:process>\r
+         <asy:input>?</asy:input>\r
+      </asy:process>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="process"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

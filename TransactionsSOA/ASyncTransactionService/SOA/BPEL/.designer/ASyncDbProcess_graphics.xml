@@ -4,7 +4,7 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="dbprocess_client" x="7" y="260" side="left"/>
+      <partnerlink name="asyncdbprocess_client" x="0" y="252" side="left"/>
       <partnerlink name="TransactionDbAdapter" x="1345" y="284" side="right"/>
    </partnerlink_locations>
    <graph_layout viewport="0,0,1490,787" show_swimlanes="true">

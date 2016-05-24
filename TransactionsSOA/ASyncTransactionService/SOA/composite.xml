@@ -11,7 +11,99 @@
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/"
            xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/ASyncTransactionService/TransactionDbAdapter"
+          location="WSDLs/TransactionDbAdapter.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/ASyncTransactionService/TransactionJmsAdapter"
+          location="WSDLs/TransactionJmsAdapter.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess"
+          location="WSDLs/ASyncJmsProcess.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess"
+          location="WSDLs/ASyncDbProcess.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess"
+          location="WSDLs/AsyncTransactionProcess.wsdl" importType="wsdl"/>
+  <service name="asynctransactionprocess_client_ep" ui:wsdlLocation="WSDLs/AsyncTransactionProcess.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess#wsdl.interface(AsyncTransactionProcess)"/>
+    <binding.ws port="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess#wsdl.endpoint(asynctransactionprocess_client_ep/AsyncTransactionProcess_pt)"/>
+  </service>
   <property name="productVersion" type="xs:string" many="false">12.2.1.0.0.151013</property>
   <property name="compositeID" type="xs:string" many="false">fbdede5f-4ccd-4a3f-8223-2312bf1ed430</property>
   <property name="validateSchema" type="xs:boolean" many="false">false</property>
+  <component name="ASyncJmsProcess" version="2.0">
+    <implementation.bpel src="BPEL/ASyncJmsProcess.bpel"/>
+    <componentType>
+      <service name="asyncjmsprocess_client" ui:wsdlLocation="WSDLs/ASyncJmsProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcess)"
+                        callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcessCallback)"/>
+      </service>
+      <reference name="TransactionJmsAdapter" ui:wsdlLocation="WSDLs/TransactionJmsAdapter.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/ASyncTransactionService/TransactionJmsAdapter#wsdl.interface(Produce_Message_ptt)"/>
+      </reference>
+    </componentType>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+    <property name="bpel.config.transaction" type="xs:string" many="false"></property>
+  </component>
+  <component name="ASyncDbProcess" version="2.0">
+    <implementation.bpel src="BPEL/ASyncDbProcess.bpel"/>
+    <componentType>
+      <service name="asyncdbprocess_client" ui:wsdlLocation="WSDLs/ASyncDbProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcess)"
+                        callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcessCallback)"/>
+      </service>
+      <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/ASyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+      </reference>
+    </componentType>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+    <property name="bpel.config.transaction" type="xs:string" many="false"></property>
+    <property name="bpel.preference.error.action" type="xs:anyAtomicType" many="false" override="may">throw</property>
+  </component>
+  <component name="AsyncTransactionProcess" version="2.0">
+    <implementation.bpel src="BPEL/AsyncTransactionProcess.bpel"/>
+    <componentType>
+      <service name="asynctransactionprocess_client" ui:wsdlLocation="WSDLs/AsyncTransactionProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/AsyncTransactionProcess#wsdl.interface(AsyncTransactionProcess)"/>
+      </service>
+      <reference name="ASyncDbProcess.asyncdbprocess_client" ui:wsdlLocation="WSDLs/ASyncDbProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcess)"
+                        callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncDbProcess#wsdl.interface(ASyncDbProcessCallback)"/>
+      </reference>
+      <reference name="ASyncJmsProcess.asyncjmsprocess_client" ui:wsdlLocation="WSDLs/ASyncJmsProcess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcess)"
+                        callbackInterface="http://xmlns.oracle.com/TransactionsSOA/ASyncTransactionService/ASyncJmsProcess#wsdl.interface(ASyncJmsProcessCallback)"/>
+      </reference>
+    </componentType>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+  </component>
+  <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/ASyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
+    <binding.jca config="Adapters/TransactionDbAdapter_db.jca"/>
+    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+    <property name="jca.retry.interval" type="xs:int" many="false" override="may">1</property>
+    <property name="jca.retry.backoff" type="xs:int" many="false" override="may">2</property>
+    <property name="jca.retry.maxInterval" type="xs:int" many="false" override="may">120</property>
+  </reference>
+  <reference name="TransactionJmsAdapter" ui:wsdlLocation="WSDLs/TransactionJmsAdapter.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/jms/TransactionsSOA/ASyncTransactionService/TransactionJmsAdapter#wsdl.interface(Produce_Message_ptt)"/>
+    <binding.jca config="Adapters/TransactionJmsAdapter_jms.jca"/>
+  </reference>
+  <wire>
+    <source.uri>ASyncJmsProcess/TransactionJmsAdapter</source.uri>
+    <target.uri>TransactionJmsAdapter</target.uri>
+  </wire>
+  <wire>
+    <source.uri>ASyncDbProcess/TransactionDbAdapter</source.uri>
+    <target.uri>TransactionDbAdapter</target.uri>
+  </wire>
+  <wire>
+    <source.uri>asynctransactionprocess_client_ep</source.uri>
+    <target.uri>AsyncTransactionProcess/asynctransactionprocess_client</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AsyncTransactionProcess/ASyncDbProcess.asyncdbprocess_client</source.uri>
+    <target.uri>ASyncDbProcess/asyncdbprocess_client</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AsyncTransactionProcess/ASyncJmsProcess.asyncjmsprocess_client</source.uri>
+    <target.uri>ASyncJmsProcess/asyncjmsprocess_client</target.uri>
+  </wire>
 </composite>

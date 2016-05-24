@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="ASyncTransactionService">
+      <component name="ASyncJmsProcess">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>sync</replace>
+         </property>
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="ASyncDbProcess">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>sync</replace>
+         </property>
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+         <property name="bpel.preference.error.action">
+            <replace>throw</replace>
+         </property>
+      </component>
+      <component name="AsyncTransactionProcess">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+   </composite>
+   <wsdlAndSchema name="Adapters/TransactionDbAdapter_db.jca|Adapters/TransactionJmsAdapter_jms.jca|Schemas/ASyncDbProcess.xsd|Schemas/ASyncJmsProcess.xsd|Schemas/AsyncTransactionProcess.xsd|Schemas/TransactionDbAdapter_table.xsd|WSDLs/ASyncDbProcess.wsdl|WSDLs/ASyncJmsProcess.wsdl|WSDLs/AsyncTransactionProcess.wsdl|WSDLs/TransactionDbAdapter.wsdl|WSDLs/TransactionJmsAdapter.wsdl">
+      <searchReplace>
+         <search/>
+         <replace/>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

@@ -1,0 +1,55 @@
+<wsdl:definitions name="WsatJmsProcess" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/WsatJmsService/WsatJmsProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/TransactionsSOA/WsatJmsService/WsatJmsProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:documentation>
+        <abstractWSDL>https://DESKTOP-T7VHRK1:7102/soa-infra/services/default/WsatJmsService!1.0/WSDLs/WsatJmsProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="WsatJmsProcess">
+        <plnk:role name="WsatJmsProcessProvider" portType="client:WsatJmsProcess"/>
+    </plnk:partnerLinkType>
+<wsp:Policy wsu:Id="WsatJmsProcessBinding_WSAT_policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+   <wsp:ExactlyOne>
+      <wsp:All>
+         <wsat:ATAssertion xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat"/>
+      </wsp:All>
+      <wsp:All>
+         <wsat11:ATAssertion xmlns:wsat11="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+      </wsp:All>
+      <wsp:All>
+         <wsat12:ATAssertion xmlns:wsat12="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+      </wsp:All>
+   </wsp:ExactlyOne>
+</wsp:Policy>    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/TransactionsSOA/WsatJmsService/WsatJmsProcess" schemaLocation="XMLSchema_1664251962.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="WsatJmsProcessRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="WsatJmsProcessResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="WsatJmsProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:WsatJmsProcessRequestMessage"/>
+            <wsdl:output message="client:WsatJmsProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WsatJmsProcessBinding" type="client:WsatJmsProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+      <wsp:PolicyReference URI="#WsatJmsProcessBinding_WSAT_policy" wsdl:required="false" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="wsatjmsprocess_client_ep">
+        <wsdl:port name="WsatJmsProcess_pt" binding="client:WsatJmsProcessBinding">
+            <soap:address location="https://DESKTOP-T7VHRK1:7102/soa-infra/services/default/WsatJmsService!1.0*soa_a92240bf-a65e-4a3c-82a3-1fb4684a0344/wsatjmsprocess_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

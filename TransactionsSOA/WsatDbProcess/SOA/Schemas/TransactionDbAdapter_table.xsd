@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="TransactionCollection" type="TransactionCollection"/>
+   <xs:complexType name="TransactionCollection">
+      <xs:sequence>
+         <xs:element name="Transaction" type="Transaction" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Transaction">
+      <xs:sequence>
+         <xs:element name="componentName" type="xs:string" nillable="true"/>
+         <xs:element name="compositeName" type="xs:string" nillable="true"/>
+         <xs:element name="updateTime" type="xs:dateTime" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="TransactionDbAdapterSelect_componentNameInputParameters" type="TransactionDbAdapterSelect_componentName"/>
+   <xs:complexType name="TransactionDbAdapterSelect_componentName">
+      <xs:sequence>
+         <xs:element name="componentName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

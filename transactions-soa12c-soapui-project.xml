@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="6ba46cfd-79fa-4b8a-8989-e5071e2eded8" activeEnvironment="Default" name="transactions-soa12c" resourceRoot="" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="0e23ed06-7991-4445-aa8c-cf3d433816d1" wsaVersion="NONE" name="SyncTransactionProcessBinding" type="wsdl" bindingName="{http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess}SyncTransactionProcessBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService?WSDL"><con:part><con:url>http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService?WSDL</con:url><con:content><![CDATA[<wsdl:definitions name="SyncTransactionProcess" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>
+    <abstractWSDL>http://localhost:7101/soa-infra/services/default/SyncTransactionService!1.0/WSDLs/SyncTransactionProcess.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <plnk:partnerLinkType name="SyncTransactionProcess">
+    <plnk:role name="SyncTransactionProcessProvider" portType="client:SyncTransactionProcess"/>
+  </plnk:partnerLinkType>
+  <wsp:Policy wsu:Id="SyncTransactionProcessBinding_WSAT_policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsat:ATAssertion wsp:Optional="true" xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat"/>
+      </wsp:All>
+      <wsp:All>
+        <wsat11:ATAssertion wsp:Optional="true" xmlns:wsat11="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+      </wsp:All>
+      <wsp:All>
+        <wsat12:ATAssertion wsp:Optional="true" xmlns:wsat12="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess" schemaLocation="http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService?XSD=../Schemas/SyncTransactionProcess.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="SyncTransactionProcessRequestMessage">
+    <wsdl:part name="payload" element="client:process"/>
+  </wsdl:message>
+  <wsdl:message name="SyncTransactionProcessResponseMessage">
+    <wsdl:part name="payload" element="client:processResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SyncTransactionProcessFaultMessage">
+    <wsdl:part name="payload" element="client:processFault"/>
+  </wsdl:message>
+  <wsdl:portType name="SyncTransactionProcess">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:SyncTransactionProcessRequestMessage"/>
+      <wsdl:output message="client:SyncTransactionProcessResponseMessage"/>
+      <wsdl:fault name="processFault" message="client:SyncTransactionProcessFaultMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SyncTransactionProcessBinding" type="client:SyncTransactionProcess">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="process">
+      <soap:operation style="document" soapAction="process"/>
+      <wsp:PolicyReference URI="#SyncTransactionProcessBinding_WSAT_policy" wsdl:required="false" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="processFault">
+        <soap:fault name="processFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SyncTransactionService">
+    <wsdl:port name="SyncTransactionProcess_pt" binding="client:SyncTransactionProcessBinding">
+      <soap:address location="http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService?XSD=../Schemas/SyncTransactionProcess.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="process">
+    <complexType>
+      <sequence>
+        <element name="input" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="processResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="processFault">
+    <complexType>
+      <sequence>
+        <element name="result" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService</con:endpoint></con:endpoints><con:operation id="5ab6ad32-ee80-4f24-99c5-62e0351ecaf5" isOneWay="false" action="process" name="process" bindingOperationName="process" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e3c5af7b-c410-4345-8b24-eb5a09cd7077" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/soa-infra/services/default/SyncTransactionService/SyncTransactionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:syn="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <syn:process>\r
+         <syn:input>?</syn:input>\r
+      </syn:process>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="process"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="537549e9-c551-47ee-b585-63df92887aaa" wsaVersion="NONE" name="execute_bind" type="wsdl" bindingName="{http://xmlns.oracle.com/TransactionsSB/SoaDirectService}execute_bind" soapVersion="1_1" anonymous="optional" definition="http://localhost:7101/SoaDirectService/wsdl/SoaDirectService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7101/SoaDirectService/wsdl/SoaDirectService?wsdl"><con:part><con:url>http://localhost:7101/SoaDirectService/wsdl/SoaDirectService?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions name="SoaDirectService" targetNamespace="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:inp1="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" xmlns:inp2="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="string" type="string"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="requestMessage">
+    <WL5G3N0:part element="WL5G3N1:string" name="part1"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="replyMessage">
+    <WL5G3N0:part element="WL5G3N1:string" name="part1"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="execute_ptt">
+    <WL5G3N0:operation name="execute">
+      <WL5G3N0:input message="WL5G3N1:requestMessage"/>
+      <WL5G3N0:output message="WL5G3N1:replyMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="execute_bind" type="WL5G3N1:execute_ptt">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="execute">
+      <WL5G3N2:operation soapAction="execute" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body namespace="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body namespace="http://xmlns.oracle.com/TransactionsSB/SoaDirectService" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="execute_bindQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N1:execute_bind" name="execute_bindQSPort">
+      <WL5G3N2:address location="http://localhost:7101/SoaDirectService"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7101/SoaDirectService</con:endpoint></con:endpoints><con:operation id="e9069f26-4116-4e02-b698-97dfc9308e3e" isOneWay="false" action="execute" name="execute" bindingOperationName="execute" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="866da0ef-4134-4d8a-95e6-b4b7ba0ed1e7" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/SoaDirectService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soad="http://xmlns.oracle.com/TransactionsSB/SoaDirectService">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <soad:string>?</soad:string>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="execute"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

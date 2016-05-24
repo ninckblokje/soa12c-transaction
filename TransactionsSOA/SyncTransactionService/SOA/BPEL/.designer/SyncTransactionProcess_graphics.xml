@@ -6,9 +6,9 @@
    <partnerlink_locations>
       <partnerlink name="synctransactionprocess_client" x="0" y="227" side="left"/>
       <partnerlink name="DbProcess.dbprocess_client" x="0" y="284" side="left"/>
-      <partnerlink name="JmsProcess.jmsprocess_client" x="1041" y="188" side="right"/>
+      <partnerlink name="JmsProcess.jmsprocess_client" x="1325" y="188" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1221,453" show_swimlanes="true">
+   <graph_layout viewport="0,0,1505,787" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

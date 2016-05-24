@@ -4,12 +4,11 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="dbprocess_client" x="7" y="260" side="left"/>
+      <partnerlink name="wsatdbprocess_client" x="0" y="235" side="left"/>
       <partnerlink name="TransactionDbAdapter" x="1360" y="284" side="right"/>
    </partnerlink_locations>
    <graph_layout viewport="0,0,1505,787" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
-      <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll" type="catchall"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>

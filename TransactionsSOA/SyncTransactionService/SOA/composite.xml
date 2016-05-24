@@ -69,7 +69,7 @@
       </reference>
     </componentType>
     <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
-    <property name="bpel.preference.error.handler" type="xs:anyAtomicType" many="false" override="may">throw</property>
+    <property name="bpel.preference.error.action" type="xs:anyAtomicType" many="false" override="may">throw</property>
   </component>
   <reference name="TransactionDbAdapter" ui:wsdlLocation="WSDLs/TransactionDbAdapter.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>

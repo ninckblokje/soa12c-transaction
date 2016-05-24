@@ -5,9 +5,9 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="jmsprocess_client" x="5" y="235" side="left"/>
-      <partnerlink name="TransactionJmsAdapter" x="1071" y="284" side="right"/>
+      <partnerlink name="TransactionJmsAdapter" x="1355" y="284" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1221,453" show_swimlanes="true">
+   <graph_layout viewport="0,0,1505,787" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

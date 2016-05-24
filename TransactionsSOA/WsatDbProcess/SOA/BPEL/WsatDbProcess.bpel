@@ -3,21 +3,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   Oracle JDeveloper BPEL Designer 
   
-  Created: Sun May 22 23:01:43 CEST 2016
+  Created: Tue May 24 13:39:33 CEST 2016
   Author:  ninckblokje
   Type: BPEL 2.0 Process
   Purpose: Synchronous BPEL Process
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -->
-<process name="DbProcess"
-               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess"
+<process name="WsatDbProcess"
+               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess"
                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess"
+               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess"
                xmlns:ora="http://schemas.oracle.com/xpath/extension"
                xmlns:ui="http://xmlns.oracle.com/soa/designer"
                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SyncTransactionService/TransactionDbAdapter"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/WsatDbProcess/TransactionDbAdapter"
          xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
          xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
          xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
@@ -29,10 +29,9 @@
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter"
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionDbAdapter">
 
-    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/DbProcess" location="../WSDLs/DbProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess" location="../WSDLs/WsatDbProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         PARTNERLINKS                                                      
@@ -45,7 +44,7 @@
       used for callback. The location and correlation information associated
       with the client role are automatically set using WS-Addressing.
     -->
-    <partnerLink name="dbprocess_client" partnerLinkType="client:DbProcess" myRole="DbProcessProvider"/>
+    <partnerLink name="wsatdbprocess_client" partnerLinkType="client:WsatDbProcess" myRole="WsatDbProcessProvider"/>
     <partnerLink name="TransactionDbAdapter" partnerLinkType="ns1:TransactionDbAdapter_plt"
                  partnerRole="TransactionDbAdapter_role"/>
   </partnerLinks>
@@ -58,42 +57,13 @@
   -->
   <variables>
     <!-- Reference to the message passed as input during initiation -->
-    <variable name="inputVariable" messageType="client:DbProcessRequestMessage"/>
+    <variable name="inputVariable" messageType="client:WsatDbProcessRequestMessage"/>
 
     <!-- Reference to the message that will be returned to the requester-->
-    <variable name="outputVariable" messageType="client:DbProcessResponseMessage"/>
+    <variable name="outputVariable" messageType="client:WsatDbProcessResponseMessage"/>
     <variable name="InvokeInsert_insert_InputVariable" messageType="ns1:TransactionCollection_msg"/>
-    <variable name="errorAction" type="xsd:string">
-      <from xmlns:ora="http://schemas.oracle.com/xpath/extension">ora:getPreference('error.action')</from>
-    </variable>
-    <variable name="processFault" messageType="client:DbProcessFaultMessage"/>
   </variables>
-  <faultHandlers>
-    <catchAll>
-      <if name="ErrorAction">
-        <documentation>
-          <![CDATA[Reply]]>
-        </documentation>
-        <condition>$errorAction='reply'</condition>
-        <reply name="ReplyFault" faultName="client:processFault" partnerLink="dbprocess_client"
-               variable="processFault" portType="client:DbProcess" operation="process"/>
-        <elseif>
-          <documentation>
-            <![CDATA[Ignore]]>
-          </documentation>
-          <condition>$errorAction='ignore'</condition>
-          <reply name="ReplyOutput" partnerLink="dbprocess_client" variable="outputVariable"
-                 portType="client:DbProcess" operation="process"/>
-        </elseif>
-        <else>
-          <documentation>
-            <![CDATA[Throw]]>
-          </documentation>
-          <rethrow name="Rethrow"/>
-        </else>
-      </if>
-    </catchAll>
-  </faultHandlers>
+
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      ORCHESTRATION LOGIC                                               
@@ -103,11 +73,11 @@
   -->
   <sequence name="main">
 
-    <!-- Receive input from requestor. (Note: This maps to operation defined in DbProcess.wsdl) -->
-    <receive name="receiveInput" partnerLink="dbprocess_client" portType="client:DbProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <!-- Receive input from requestor. (Note: This maps to operation defined in WsatDbProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="wsatdbprocess_client" portType="client:WsatDbProcess" operation="process" variable="inputVariable" createInstance="yes"/>
     <assign name="AssignInsertRequest">
       <copy>
-        <from>ora:getCompositeName()</from>
+        <from>ora:getComponentName()</from>
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInsert_insert_InputVariable.TransactionCollection/ns2:Transaction/ns2:componentName</to>
       </copy>
       <copy>
@@ -119,6 +89,6 @@
             portType="ns1:TransactionDbAdapter_ptt" operation="insert"
             inputVariable="InvokeInsert_insert_InputVariable"/>
     <!-- Generate reply to synchronous request -->
-    <reply name="replyOutput" partnerLink="dbprocess_client" portType="client:DbProcess" operation="process" variable="outputVariable"/>
+    <reply name="replyOutput" partnerLink="wsatdbprocess_client" portType="client:WsatDbProcess" operation="process" variable="outputVariable"/>
   </sequence>
 </process>

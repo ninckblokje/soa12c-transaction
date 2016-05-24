@@ -1,0 +1,55 @@
+<wsdl:definitions name="WsatDbProcess" targetNamespace="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:documentation>
+        <abstractWSDL>https://DESKTOP-T7VHRK1:7102/soa-infra/services/default/WsatDbProcess!1.0/WSDLs/WsatDbProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="WsatDbProcess">
+        <plnk:role name="WsatDbProcessProvider" portType="client:WsatDbProcess"/>
+    </plnk:partnerLinkType>
+<wsp:Policy wsu:Id="WsatDbProcessBinding_WSAT_policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+   <wsp:ExactlyOne>
+      <wsp:All>
+         <wsat:ATAssertion xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat"/>
+      </wsp:All>
+      <wsp:All>
+         <wsat11:ATAssertion xmlns:wsat11="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+      </wsp:All>
+      <wsp:All>
+         <wsat12:ATAssertion xmlns:wsat12="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+      </wsp:All>
+   </wsp:ExactlyOne>
+</wsp:Policy>    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess" schemaLocation="XMLSchema_898540742.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="WsatDbProcessRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="WsatDbProcessResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="WsatDbProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:WsatDbProcessRequestMessage"/>
+            <wsdl:output message="client:WsatDbProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WsatDbProcessBinding" type="client:WsatDbProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+      <wsp:PolicyReference URI="#WsatDbProcessBinding_WSAT_policy" wsdl:required="false" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="wsatdbprocess_client_ep">
+        <wsdl:port name="WsatDbProcess_pt" binding="client:WsatDbProcessBinding">
+            <soap:address location="https://DESKTOP-T7VHRK1:7102/soa-infra/services/default/WsatDbProcess!1.0*soa_ddb14550-695c-4dca-90a5-fd71c1951aad/wsatdbprocess_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

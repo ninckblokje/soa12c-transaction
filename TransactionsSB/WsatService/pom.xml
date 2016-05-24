@@ -3,16 +3,18 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.oracle.servicebus</groupId>
+        <artifactId>sbar-project-common</artifactId>
+        <version>12.1.3-0-0</version>
+    </parent>
+
     <groupId>TransactionsSB</groupId>
-    <artifactId>TransactionsSB</artifactId>
+    <artifactId>WsatService</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+    <packaging>sbar</packaging>
 
-    <modules>
-        <module>System</module>
-        <module>SoaDirectService</module>
-        <module>WsatService</module>
-    </modules>
+    <description/>
 
 </project>

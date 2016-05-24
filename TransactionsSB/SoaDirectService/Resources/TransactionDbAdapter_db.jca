@@ -1,0 +1,57 @@
+<adapter-config name="TransactionDbAdapter" adapter="db" wsdlLocation="TransactionDbAdapter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="transaction at local XE" location="eis/DB/XA/transaction"/>
+  <endpoint-interaction portType="TransactionDbAdapter_ptt" operation="merge">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="TransactionDbAdapter.Transaction"/>
+      <property name="DmlType" value="merge"/>
+      <property name="MappingsMetaDataURL" value="TransactionDbAdapter-or-mappings.xml"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="DetectOmissions" value="true"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+  <endpoint-interaction portType="TransactionDbAdapter_ptt" operation="insert">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="TransactionDbAdapter.Transaction"/>
+      <property name="DmlType" value="insert"/>
+      <property name="MappingsMetaDataURL" value="TransactionDbAdapter-or-mappings.xml"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+  <endpoint-interaction portType="TransactionDbAdapter_ptt" operation="update">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="TransactionDbAdapter.Transaction"/>
+      <property name="DmlType" value="update"/>
+      <property name="MappingsMetaDataURL" value="TransactionDbAdapter-or-mappings.xml"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+  <endpoint-interaction portType="TransactionDbAdapter_ptt" operation="delete">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="TransactionDbAdapter.Transaction"/>
+      <property name="DmlType" value="delete"/>
+      <property name="MappingsMetaDataURL" value="TransactionDbAdapter-or-mappings.xml"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+  <endpoint-interaction portType="TransactionDbAdapter_ptt" operation="TransactionDbAdapterSelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="TransactionDbAdapter.Transaction"/>
+      <property name="QueryName" value="TransactionDbAdapterSelect"/>
+      <property name="MappingsMetaDataURL" value="TransactionDbAdapter-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

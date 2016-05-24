@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="0" name="func">
+      <source_tree_view last.visible.row="0" last.visible.path="" first.visible.path="" expanded.paths="" first.visible.row="0" selected.paths=""/>
+      <target_tree_view last.visible.row="4" last.visible.path="/TargetRoot[[0]]/TransactionCollection[[0]]/Transaction[[0]]/updateTime[[2]]" first.visible.path="/TargetRoot[[0]]/TransactionCollection[[0]]" expanded.paths="/TargetRoot[[0]]/TransactionCollection[[0]]&#xA;/TargetRoot[[0]]/TransactionCollection[[0]]/Transaction[[0]]" first.visible.row="0" selected.paths="/TargetRoot[[0]]/TransactionCollection[[0]]/Transaction[[0]]/componentName[[0]]"/>
+   </function>
+</view_states>

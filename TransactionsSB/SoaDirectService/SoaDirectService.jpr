@@ -202,5 +202,6 @@
          </list>
       </hash>
    </hash>
+   <value n="SOA_TRANSFORMATION_FOLDER_NAME" v=""/>
    <value n="SOA_WSDL_FOLDER_NAME" v="wsdl/"/>
 </jpr:project>

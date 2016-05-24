@@ -15,11 +15,11 @@
         </dgm:operations>
     </dgm:gService>
     <dgm:gReference name="TransactionDbAdapter">
-        <dgm:body borderWidth="2" arcRad="20" X="1072" Y="41" width="136" height="132">
+        <dgm:body borderWidth="2" arcRad="20" X="1082" Y="41" width="136" height="132">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="1062" Y="34" width="156" height="146">
+        <dgm:shadow arcRad="20" X="1072" Y="34" width="156" height="146">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="TransactionDbAdapter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/TransactionsSOA/SbService/TransactionDbAdapter#wsdl.interface(TransactionDbAdapter_ptt)"/>
@@ -33,12 +33,12 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gComponent name="SoaDirectProcess">
-        <dgm:body borderWidth="2" arcRad="20" X="550" Y="26" width="130" height="61">
+        <dgm:body borderWidth="2" arcRad="20" X="555" Y="26" width="130" height="61">
             <dgm:borderColor r="69" g="113" b="140"/>
             <dgm:lightBgColor r="166" g="208" b="230"/>
             <dgm:darkBgColor r="99" g="162" b="201"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="540" Y="19" width="150" height="77">
+        <dgm:shadow arcRad="20" X="545" Y="19" width="150" height="77">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="soadirectprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/TransactionsSOA/SbService/SoaDirectProcess#wsdl.interface(SoaDirectProcess)"/>
@@ -46,12 +46,12 @@
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gWireLink source="SoaDirectService" target="SoaDirectProcess/soadirectprocess_client" width="2">
-        <dgm:gSegment X1="168" Y1="51" X2="540" Y2="51"/>
+        <dgm:gSegment X1="168" Y1="51" X2="545" Y2="51"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="SoaDirectProcess/TransactionDbAdapter" target="TransactionDbAdapter" width="2">
-        <dgm:gSegment X1="690" Y1="51" X2="1062" Y2="51"/>
+        <dgm:gSegment X1="695" Y1="51" X2="1072" Y2="51"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>

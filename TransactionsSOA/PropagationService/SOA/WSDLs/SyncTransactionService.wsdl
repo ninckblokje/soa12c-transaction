@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="SyncTransactionProcess"
+     targetNamespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <wsdl:documentation>
+        <abstractWSDL>https://DESKTOP-T7VHRK1:7102/soa-infra/services/default/SyncTransactionService!1.0/WSDLs/SyncTransactionProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="SyncTransactionProcess">
+        <plnk:role name="SyncTransactionProcessProvider" portType="client:SyncTransactionProcess"/>
+    </plnk:partnerLinkType>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="SyncTransactionProcessBinding_WSAT_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsat:ATAssertion wsp:Optional="true" xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat"/>
+            </wsp:All>
+            <wsp:All>
+                <wsat11:ATAssertion wsp:Optional="true" xmlns:wsat11="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+            </wsp:All>
+            <wsp:All>
+                <wsat12:ATAssertion wsp:Optional="true" xmlns:wsat12="http://docs.oasis-open.org/ws-tx/wsat/2006/06"/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess"
+                 schemaLocation="../Schemas/SyncTransactionProcess.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="SyncTransactionProcessRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="SyncTransactionProcessResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SyncTransactionProcessFaultMessage">
+        <wsdl:part name="payload" element="client:processFault"/>
+    </wsdl:message>
+    <wsdl:portType name="SyncTransactionProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:SyncTransactionProcessRequestMessage"/>
+            <wsdl:output message="client:SyncTransactionProcessResponseMessage"/>
+            <wsdl:fault name="processFault" message="client:SyncTransactionProcessFaultMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SyncTransactionProcessBinding" type="client:SyncTransactionProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#SyncTransactionProcessBinding_WSAT_policy"
+                 wsdl:required="false"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="processFault">
+                <soap:fault name="processFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SyncTransactionService">
+        <wsdl:port name="SyncTransactionProcess_pt" binding="client:SyncTransactionProcessBinding">
+            <soap:address location="https://DESKTOP-T7VHRK1:7102/soa-infra/services/default/SyncTransactionService!1.0*soa_e42dd7c7-bebb-4f66-9aa1-2e813bce2b04/SyncTransactionService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

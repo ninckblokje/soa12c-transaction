@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 25 12:36:08 CEST 2016
+  Author:  ninckblokje
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="PropagationProcess"
+               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/PropagationService/PropagationProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/PropagationService/PropagationProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/PropagationService/PropagationProcess" location="../WSDLs/PropagationProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="propagationprocess_client" partnerLinkType="client:PropagationProcess" myRole="PropagationProcessProvider"/>
+    <partnerLink name="SyncTransactionService" partnerLinkType="ns1:SyncTransactionProcess"
+                 partnerRole="SyncTransactionProcessProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:PropagationProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:PropagationProcessResponseMessage"/>
+    <variable name="InvokeProcess_process_InputVariable" messageType="ns1:SyncTransactionProcessRequestMessage"/>
+    <variable name="InvokeProcess_process_OutputVariable" messageType="ns1:SyncTransactionProcessResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in PropagationProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="propagationprocess_client" portType="client:PropagationProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <invoke name="InvokeProcess" bpelx:invokeAsDetail="no" partnerLink="SyncTransactionService"
+            portType="ns1:SyncTransactionProcess" operation="process"
+            inputVariable="InvokeProcess_process_InputVariable" outputVariable="InvokeProcess_process_OutputVariable"/>
+    <throw name="ThrowRollback" faultName="bpelx:rollback"/>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="propagationprocess_client" portType="client:PropagationProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

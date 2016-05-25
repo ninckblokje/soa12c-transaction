@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 25 21:32:26 CEST 2016
+  Author:  ninckblokje
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="WsatProcess"
+               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/WsatService/WsatProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/WsatService/WsatProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess"
+         xmlns:ns2="http://xmlns.oracle.com/TransactionsSOA/WsatJmsService/WsatJmsProcess">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/WsatService/WsatProcess" location="../WSDLs/WsatProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="wsatprocess_client" partnerLinkType="client:WsatProcess" myRole="WsatProcessProvider"/>
+    <partnerLink name="WsatJmsService" partnerLinkType="ns2:WsatJmsProcess" partnerRole="WsatJmsProcessProvider"/>
+    <partnerLink name="WsatDbService" partnerLinkType="ns1:WsatDbProcess" partnerRole="WsatDbProcessProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:WsatProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:WsatProcessResponseMessage"/>
+    <variable name="InvokeJms_process_InputVariable" messageType="ns2:WsatJmsProcessRequestMessage"/>
+    <variable name="InvokeJms_process_OutputVariable" messageType="ns2:WsatJmsProcessResponseMessage"/>
+    <variable name="InvokeDb_process_InputVariable" messageType="ns1:WsatDbProcessRequestMessage"/>
+    <variable name="InvokeDb_process_OutputVariable" messageType="ns1:WsatDbProcessResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in WsatProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="wsatprocess_client" portType="client:WsatProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <invoke name="InvokeJms" bpelx:invokeAsDetail="no" partnerLink="WsatJmsService" portType="ns2:WsatJmsProcess"
+            operation="process" inputVariable="InvokeJms_process_InputVariable"
+            outputVariable="InvokeJms_process_OutputVariable"/>
+    <invoke name="InvokeDb" bpelx:invokeAsDetail="no" partnerLink="WsatDbService" portType="ns1:WsatDbProcess"
+            operation="process" inputVariable="InvokeDb_process_InputVariable"
+            outputVariable="InvokeDb_process_OutputVariable"/>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="wsatprocess_client" portType="client:WsatProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

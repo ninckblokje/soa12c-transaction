@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='WsatDbService']</loc>
+      <line>63</line>
+      <col>111</col>
+      <file>C:\Users\ninckblokje\dev\sources\transactions-soa12c\TransactionsSOA\WsatService\SOA\composite.xml</file>
+      <name>C:\Users\ninckblokje\dev\sources\transactions-soa12c\TransactionsSOA\WsatService\SOA\composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "WsatDbService":"{http://xmlns.oracle.com/TransactionsSOA/WsatDbProcess/WsatDbProcess}WsatDbProcess_pt" in WSDL Manager</msg>
+   </Fault>
+</Faults>

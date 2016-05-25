@@ -25,10 +25,13 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="ASyncTransactionService/ASyncTransactionService.jpr"/></hash>
+      <hash><url n="URL" path="PropagationService/PropagationService.jpr"/></hash>
+      <hash><url n="URL" path="ReallyLongService/ReallyLongService.jpr"/></hash>
       <hash><url n="URL" path="SbService/SbService.jpr"/></hash>
       <hash><url n="URL" path="SyncTransactionService/SyncTransactionService.jpr"/></hash>
       <hash><url n="URL" path="WsatDbProcess/WsatDbProcess.jpr"/></hash>
       <hash><url n="URL" path="WsatJmsService/WsatJmsService.jpr"/></hash>
+      <hash><url n="URL" path="WsatService/WsatService.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
       <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">

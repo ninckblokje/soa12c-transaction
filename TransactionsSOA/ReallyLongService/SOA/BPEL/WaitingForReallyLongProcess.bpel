@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed May 25 21:47:51 CEST 2016
+  Author:  ninckblokje
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="WaitingForReallyLongProcess"
+               targetNamespace="http://xmlns.oracle.com/TransactionsSOA/ReallyLongService/WaitingForReallyLongProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/TransactionsSOA/ReallyLongService/WaitingForReallyLongProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/TransactionsSOA/ReallyLongService/ReallyLongProcess">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/TransactionsSOA/ReallyLongService/WaitingForReallyLongProcess" location="../WSDLs/WaitingForReallyLongProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="waitingforreallylongprocess_client" partnerLinkType="client:WaitingForReallyLongProcess" myRole="WaitingForReallyLongProcessProvider"/>
+    <partnerLink name="ReallyLongProcess.reallylongprocess_client" partnerLinkType="ns1:ReallyLongProcess"
+                 partnerRole="ReallyLongProcessProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:WaitingForReallyLongProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:WaitingForReallyLongProcessResponseMessage"/>
+    <variable name="InvokeDoSomethingLong_process_InputVariable" messageType="ns1:ReallyLongProcessRequestMessage"/>
+    <variable name="InvokeDoSomethingLong_process_OutputVariable" messageType="ns1:ReallyLongProcessResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in WaitingForReallyLongProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="waitingforreallylongprocess_client" portType="client:WaitingForReallyLongProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <invoke name="InvokeDoSomethingLong" bpelx:invokeAsDetail="no"
+            partnerLink="ReallyLongProcess.reallylongprocess_client" portType="ns1:ReallyLongProcess"
+            operation="process" inputVariable="InvokeDoSomethingLong_process_InputVariable"
+            outputVariable="InvokeDoSomethingLong_process_OutputVariable"/>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="waitingforreallylongprocess_client" portType="client:WaitingForReallyLongProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

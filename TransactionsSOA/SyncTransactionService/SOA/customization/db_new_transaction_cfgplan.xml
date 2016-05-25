@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="SyncTransactionService">
+      <component name="SyncTransactionProcess">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="JmsProcess">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="DbProcess">
+         <property name="bpel.config.transaction">
+            <replace>requiresNew</replace>
+         </property>
+         <property name="bpel.preference.error.action">
+            <replace>throw</replace>
+         </property>
+      </component>
+   </composite>
+   <wsdlAndSchema name="Adapters/TransactionDbAdapter_db.jca|Adapters/TransactionJmsAdapter_jms.jca|Schemas/DbProcess.xsd|Schemas/JmsProcess.xsd|Schemas/SyncTransactionProcess.xsd|Schemas/TransactionDbAdapter_table.xsd|Schemas/TransactionProcess.xsd|WSDLs/DbProcess.wsdl|WSDLs/JmsProcess.wsdl|WSDLs/SyncTransactionProcess.wsdl|WSDLs/TransactionDbAdapter.wsdl|WSDLs/TransactionJmsAdapter.wsdl">
+      <searchReplace>
+         <search/>
+         <replace/>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

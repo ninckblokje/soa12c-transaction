@@ -43,8 +43,7 @@
     <binding.ws port="http://xmlns.oracle.com/TransactionsSOA/SyncTransactionService/SyncTransactionProcess#wsdl.endpoint(SyncTransactionService/SyncTransactionProcess_pt)"
                 location="http://localhost:7101/soa-infra/services/default/SyncTransactionService!1.0/SyncTransactionService?WSDL"
                 soapVersion="1.1">
-      <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">SUPPORTS</property>
-      <property name="weblogic.wsee.wsat.transaction.version" type="xs:string" many="false">DEFAULT</property>
+      <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">NEVER</property>
     </binding.ws>
   </reference>
   <wire>
